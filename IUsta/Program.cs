@@ -1,13 +1,25 @@
+global using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.LocalStorage;
 using IUsta.Data;
+using IUsta.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddDbContext<ServerDbContext>(
+    options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSql"))
+    );
+
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 

@@ -12,6 +12,12 @@
     <link href="css/site.css" rel="stylesheet" />
     <link href="IUsta.styles.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <script>
+        // In a JavaScript file, e.g., localstorage.js
+        window.getLocalStorageItem = function (key) {
+            return localStorage.getItem(key);
+        };
+    </script>
 </head>
 <body>
     @RenderBody()
